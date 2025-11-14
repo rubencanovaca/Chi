@@ -1,48 +1,47 @@
 describe('Global Sidenav', () => {
   before(() => {
-    cy.visit('tests/lumen/js/global-nav.html');
+    cy.visit('tests/lumen/js/global-mobile-navigation.html');
   });
 
   beforeEach(() => {
-    cy.viewport(1450, 1000);
-    cy.get('[data-cy="global-nav"]')
+    cy.get('[data-cy="mobile-nav"]')
       .find('ul.chi-sidenav__list')
-      .as('list');
+      .as('mainList');
   });
 
   describe('Test expand/collapse functionality', () => {
     it('check that clicking on the toggle button collapses the sidenav', () => {
-      cy.get('#toggle-nav')
+      cy.get('#mobile-nav-trigger')
         .click();
-      cy.get('[data-cy="global-nav"]')
+      cy.get('[data-cy="mobile-nav"]')
         .should('have.class', '-collapsed');
     });
 
     it('check that sidenav expands on hover', () => {
-      cy.get('@list')
+      cy.get('@mainList')
         .trigger('mouseenter');
-      cy.get('[data-cy="global-nav"]')
+      cy.get('[data-cy="mobile-nav"]')
         .should('have.class', '-expanded');
     });
 
     it('check that clicking on the toggle button collapses the sidenav', () => {
-      cy.get('#toggle-nav')
+      cy.get('#mobile-nav-trigger')
         .click();
-      cy.get('[data-cy="global-nav"]')
+      cy.get('[data-cy="mobile-nav"]')
         .should('have.class', '-collapsed');
     });
 
     it('check that clicking on the toggle button again expands the sidenav', () => {
-      cy.get('#toggle-nav')
+      cy.get('#mobile-nav-trigger')
         .click();
-      cy.get('[data-cy="global-nav"]')
+      cy.get('[data-cy="mobile-nav"]')
         .should('have.class', '-expanded');
     });
   });
 
   describe('Test Global Sidenav items behaviour', () => {
     it('check that clicking on item activates it', () => {
-      cy.get('@list')
+      cy.get('@mainList')
         .find('> li.chi-sidenav__item:first-child chi-link')
         .as('firstLevelFirstItem');
       cy.get('@firstLevelFirstItem')
@@ -52,7 +51,7 @@ describe('Global Sidenav', () => {
     });
 
     it('check that clicking on the accordion items expands its content', () => {
-      cy.get('@list')
+      cy.get('@mainList')
         .find('> li.chi-sidenav__item')
       cy.get('.chi-accordion__item').as('accordionItem').find('.chi-accordion__trigger').click({ multiple: true });
       cy.get('@accordionItem')
@@ -65,28 +64,28 @@ describe('Global Sidenav', () => {
   describe('Test Global Sidenav on small viewport', () => {
     it('check that sidenav does not expand when viewport is small', () => {
       cy.viewport(1000, 800);
-      cy.get('#toggle-nav')
+      cy.get('#mobile-nav-trigger')
         .click();
-      cy.get('[data-cy="global-nav"]')
+      cy.get('[data-cy="mobile-nav"]')
         .should('have.class', '-collapsed');
     });
   });
 
   describe('Test Global Sidenav dispose method', () => {
     it('Trigger collapse sidenav', () => {
-      cy.get('#toggle-nav')
+      cy.get('#mobile-nav-trigger')
         .click();
     });
 
     it('Click to run dispose method', () => {
-      cy.get('#dispose-sidenav-button')
+      cy.get('#dispose-mobile-navigation-button')
         .click();
     });
 
     it('Check that sidenav does not open on trigger expand sidenav', () => {
-      cy.get('#toggle-nav')
+      cy.get('#mobile-nav-trigger')
         .click();
-      cy.get('[data-cy="global-nav"]')
+      cy.get('[data-cy="mobile-nav"]')
         .should('have.class', '-collapsed');
     });
   });
