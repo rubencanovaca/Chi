@@ -9,6 +9,14 @@
   }
 }
 
+@each $type in none inline inline-block block table table-cell table-row flex inline-flex {
+  .hover\:-d--#{$type} {
+    &:hover {
+      display: #{$type};
+    }
+  }
+}
+
 @each $size in sm md lg xl {
   @include respond-to($size) {
     @each $type in none inline inline-block block table table-cell table-row flex inline-flex {
